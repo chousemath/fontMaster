@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect} from 'react';
 import { StyleSheet, Animated, TouchableWithoutFeedback, ScrollView, SafeAreaView, Text, View } from 'react-native';
 import CardFlip from 'react-native-card-flip';
+import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import * as _ from 'lodash';
 import * as INTER from '@expo-google-fonts/inter';
@@ -200,7 +201,7 @@ function FontText({t, i}) {
     );
 };
 export default function App() {
-    const [show, setShow] = useState(true);
+    const [show, setShow] = useState(false);
     const [text, setText] = useState([]);
     const [font, setFont] = useState('');
     let [loadedOpenSans, errorOpenSans] = OPENSANS.useFonts({
@@ -334,6 +335,7 @@ export default function App() {
         setFont(_font[0]);
     };
     useEffect(() => {
+        SplashScreen.preventAutoHideAsync();
         resetList();
     }, []);
     const handleShowFont = () => {
@@ -345,6 +347,12 @@ export default function App() {
         setTimeout(() => setShow(true), 300);
         card.flip();
     };
+    useEffect(() => {
+        if (loadedOpenSans && loadedLato && loadedSlabo27px && loadedOswald && loadedSourceSansPro && loadedMontserrat && loadedRaleway && loadedPtsans && loadedInter && loadedRoboto) {
+            SplashScreen.hideAsync();
+            setTimeout(() => setShow(true), 100);
+        }
+    }, [loadedOpenSans , loadedLato , loadedSlabo27px , loadedOswald , loadedSourceSansPro , loadedMontserrat , loadedRaleway , loadedPtsans , loadedInter , loadedRoboto , ]);
   return (
       <View style={{flex: 1}}>
           <SafeAreaView style={styles.container}>
@@ -354,7 +362,7 @@ export default function App() {
                               contentContainerStyle={styles.contentContainer}>
                   <TouchableWithoutFeedback onPress={handleShowFont}>
                           <View style={{flex: 1}}>
-                              {show && loadedOpenSans && loadedLato && loadedSlabo27px && loadedOswald && loadedSourceSansPro && loadedMontserrat && loadedRaleway && loadedPtsans && loadedInter && loadedRoboto && text.map((t,i) => <FontText key={`external-text-${i}`} t={t} i={i} />)}
+                              {show && text.map((t,i) => <FontText key={`external-text-${i}`} t={t} i={i} />)}
                               </View>
                   </TouchableWithoutFeedback>
                       </ScrollView>

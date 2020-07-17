@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "fontMaster",
-    "slug": "fontMaster",
+    "name": "Fontana",
+    "slug": "Fontana",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -17,8 +17,20 @@
       "**/*"
     ],
     "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.pawkitchen.fontana",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
+    "android": {
+      "package": "com.pawkitchen.fontana",
+      "versionCode": 1
+    },
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "web": {
       "favicon": "./assets/favicon.png"
     }
