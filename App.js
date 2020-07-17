@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, TouchableWithoutFeedback, ScrollView, SafeAreaView, Text, View } from 'react-native';
+import { StyleSheet, Animated, TouchableWithoutFeedback, ScrollView, SafeAreaView, Text, View } from 'react-native';
 import CardFlip from 'react-native-card-flip';
 import * as Font from 'expo-font';
 import * as _ from 'lodash';
@@ -8,9 +8,35 @@ import * as INTER from '@expo-google-fonts/inter';
 import * as ROBOTO from '@expo-google-fonts/roboto';
 import * as PTSANS from '@expo-google-fonts/pt-sans';
 import * as RALEWAY from '@expo-google-fonts/raleway';
+import * as MONTSERRAT from '@expo-google-fonts/montserrat';
+import {
+    animate,
+    animatedTiming,
+    animateNative,
+} from './libraries/animation.service';
 
 let card;
 const fonts = [
+    [
+        'Montserrat_100Thin',
+        'Montserrat_100Thin_Italic',
+        'Montserrat_200ExtraLight',
+        'Montserrat_200ExtraLight_Italic',
+        'Montserrat_300Light',
+        'Montserrat_300Light_Italic',
+        'Montserrat_400Regular',
+        'Montserrat_400Regular_Italic',
+        'Montserrat_500Medium',
+        'Montserrat_500Medium_Italic',
+        'Montserrat_600SemiBold',
+        'Montserrat_600SemiBold_Italic',
+        'Montserrat_700Bold',
+        'Montserrat_700Bold_Italic',
+        'Montserrat_800ExtraBold',
+        'Montserrat_800ExtraBold_Italic',
+        'Montserrat_900Black',
+        'Montserrat_900Black_Italic',
+    ],
     [
         'Raleway_100Thin',
         'Raleway_100Thin_Italic',
@@ -97,9 +123,52 @@ const quote = [
     "But don’t worry.",
     "You will someday.",
 ];
+function FontText({t, i}) { 
+    const [opacity] = useState(new Animated.Value(0));
+    useEffect(() => {
+        setTimeout(() => {
+            animateNative(opacity, t.timeout, 1);
+        });
+    }, []);
+    return (
+        <Animated.Text
+            key={`internal-text-${i}`}
+            numberOfLines={1}
+            style={{
+                opacity,
+                includeFontPadding: false,
+                textAlign: 'left',
+                marginBottom: 24,
+                fontSize: 24,
+                fontFamily: t.font,
+            }}
+            key={`text-${i}`}>{t.text}</Animated.Text>
+    );
+};
 export default function App() {
+    const [show, setShow] = useState(true);
     const [text, setText] = useState([]);
     const [font, setFont] = useState('');
+    let [loadedMontserrat, errorMontserrat] = MONTSERRAT.useFonts({
+        Montserrat_100Thin: MONTSERRAT.Montserrat_100Thin,
+        Montserrat_100Thin_Italic: MONTSERRAT.Montserrat_100Thin_Italic,
+        Montserrat_200ExtraLight: MONTSERRAT.Montserrat_200ExtraLight,
+        Montserrat_200ExtraLight_Italic: MONTSERRAT.Montserrat_200ExtraLight_Italic,
+        Montserrat_300Light: MONTSERRAT.Montserrat_300Light,
+        Montserrat_300Light_Italic: MONTSERRAT.Montserrat_300Light_Italic,
+        Montserrat_400Regular: MONTSERRAT.Montserrat_400Regular,
+        Montserrat_400Regular_Italic: MONTSERRAT.Montserrat_400Regular_Italic,
+        Montserrat_500Medium: MONTSERRAT.Montserrat_500Medium,
+        Montserrat_500Medium_Italic: MONTSERRAT.Montserrat_500Medium_Italic,
+        Montserrat_600SemiBold: MONTSERRAT.Montserrat_600SemiBold,
+        Montserrat_600SemiBold_Italic: MONTSERRAT.Montserrat_600SemiBold_Italic,
+        Montserrat_700Bold: MONTSERRAT.Montserrat_700Bold,
+        Montserrat_700Bold_Italic: MONTSERRAT.Montserrat_700Bold_Italic,
+        Montserrat_800ExtraBold: MONTSERRAT.Montserrat_800ExtraBold,
+        Montserrat_800ExtraBold_Italic: MONTSERRAT.Montserrat_800ExtraBold_Italic,
+        Montserrat_900Black: MONTSERRAT.Montserrat_900Black,
+        Montserrat_900Black_Italic: MONTSERRAT.Montserrat_900Black_Italic,
+    });
     let [loadedRaleway, errorRaleway] = RALEWAY.useFonts({
         Raleway_100Thin: RALEWAY.Raleway_100Thin,
         Raleway_100Thin_Italic: RALEWAY.Raleway_100Thin_Italic,
@@ -155,36 +224,22 @@ export default function App() {
         const _text = [];
         const _font = fonts[Math.floor(Math.random() * fonts.length)];
         let _quote = _.shuffle(quote);
-        for (let i = 0; i < _font.length; i++) _text.push({text: _quote[i].slice(0, 40), font: _font[i],});
+        for (let i = 0; i < _font.length; i++) _text.push({text: _quote[i].slice(0, 40), font: _font[i], timeout: 100 * i});
         _quote = _.shuffle(quote);
-        for (let i = 0; i < (40 - _font.length); i++) _text.push({text: _quote[Math.floor(Math.random() * _quote.length)].slice(0, 30), font: _font[i],});
+        for (let i = _font.length; i < 40; i++) _text.push({text: _quote[Math.floor(Math.random() * _quote.length)].slice(0, 30), font: _font[i], timeout: 100 * i});
         setText(_text);
         setFont(_font[0]);
     };
     useEffect(() => {
         resetList();
     }, []);
-    const renderText = (t, i) => {
-        return (
-            <Text
-                numberOfLines={1}
-                style={{
-                    includeFontPadding: false,
-                    textAlign: 'left',
-                    marginBottom: 24,
-                    fontSize: 24,
-                    fontFamily: t.font,
-                }}
-                key={`text-${i}`}>{t.text}</Text>
-        );
-    };
     const handleShowFont = () => {
         card.flip();
+        setTimeout(() => setShow(false), 300);
     };
     const handleShowList = () => {
-        setTimeout(() => {
-            resetList();
-        }, 200);
+        setTimeout(() => resetList(), 200);
+        setTimeout(() => setShow(true), 300);
         card.flip();
     };
   return (
@@ -196,7 +251,7 @@ export default function App() {
                               contentContainerStyle={styles.contentContainer}>
                   <TouchableWithoutFeedback onPress={handleShowFont}>
                           <View style={{flex: 1}}>
-                              {loadedRaleway && loadedPtsans && loadedInter && loadedRoboto && text.map(renderText)}
+                              {show && loadedMontserrat && loadedRaleway && loadedPtsans && loadedInter && loadedRoboto && text.map((t,i) => <FontText key={`external-text-${i}`} t={t} i={i} />)}
                               </View>
                   </TouchableWithoutFeedback>
                       </ScrollView>
