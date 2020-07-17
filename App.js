@@ -328,16 +328,20 @@ export default function App() {
         const _text = [];
         const _font = fonts[Math.floor(Math.random() * fonts.length)];
         let _quote = _.shuffle(quote);
-        for (let i = 0; i < _font.length; i++) _text.push({text: _quote[i].slice(0, 40), font: _font[i], timeout: 100 * i});
+        for (let i = 0; i < _font.length; i++) _text.push({text: _quote[i], font: _font[i], timeout: 100 * i});
         _quote = _.shuffle(quote);
-        for (let i = _font.length; i < 40; i++) _text.push({text: _quote[Math.floor(Math.random() * _quote.length)].slice(0, 30), font: _font[i], timeout: 100 * i});
+        for (let i = _font.length; i < 40; i++) _text.push({text: _quote[Math.floor(Math.random() * _quote.length)], font: _font[i], timeout: 100 * i});
         setText(_text);
         setFont(_font[0]);
     };
+
+    let start = 0;
     useEffect(() => {
+        start = (new Date()).valueOf();
         SplashScreen.preventAutoHideAsync();
         resetList();
     }, []);
+
     const handleShowFont = () => {
         card.flip();
         setTimeout(() => setShow(false), 300);
@@ -349,8 +353,13 @@ export default function App() {
     };
     useEffect(() => {
         if (loadedOpenSans && loadedLato && loadedSlabo27px && loadedOswald && loadedSourceSansPro && loadedMontserrat && loadedRaleway && loadedPtsans && loadedInter && loadedRoboto) {
-            SplashScreen.hideAsync();
-            setTimeout(() => setShow(true), 100);
+            const now = (new Date()).valueOf();
+            let diff = now - start;
+            diff = diff > 1000 ? 0 : Math.max(diff, (start + 1000) - now);
+            setTimeout(() => {
+                SplashScreen.hideAsync();
+                setTimeout(() => setShow(true), 150);
+            }, diff);
         }
     }, [loadedOpenSans , loadedLato , loadedSlabo27px , loadedOswald , loadedSourceSansPro , loadedMontserrat , loadedRaleway , loadedPtsans , loadedInter , loadedRoboto , ]);
   return (
