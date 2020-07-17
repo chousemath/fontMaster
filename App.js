@@ -9,6 +9,11 @@ import * as ROBOTO from '@expo-google-fonts/roboto';
 import * as PTSANS from '@expo-google-fonts/pt-sans';
 import * as RALEWAY from '@expo-google-fonts/raleway';
 import * as MONTSERRAT from '@expo-google-fonts/montserrat';
+import * as SOURCESANSPRO from '@expo-google-fonts/source-sans-pro';
+import * as OSWALD from '@expo-google-fonts/oswald';
+import * as SLABO27PX from '@expo-google-fonts/slabo-27px';
+import * as LATO from '@expo-google-fonts/lato';
+import * as OPENSANS from '@expo-google-fonts/open-sans';
 import {
     animate,
     animatedTiming,
@@ -17,6 +22,55 @@ import {
 
 let card;
 const fonts = [
+    [
+        'OpenSans_300Light',
+        'OpenSans_300Light_Italic',
+        'OpenSans_400Regular',
+        'OpenSans_400Regular_Italic',
+        'OpenSans_600SemiBold',
+        'OpenSans_600SemiBold_Italic',
+        'OpenSans_700Bold',
+        'OpenSans_700Bold_Italic',
+        'OpenSans_800ExtraBold',
+        'OpenSans_800ExtraBold_Italic',
+    ],
+    [
+        'Lato_100Thin',
+        'Lato_100Thin_Italic',
+        'Lato_300Light',
+        'Lato_300Light_Italic',
+        'Lato_400Regular',
+        'Lato_400Regular_Italic',
+        'Lato_700Bold',
+        'Lato_700Bold_Italic',
+        'Lato_900Black',
+        'Lato_900Black_Italic',
+    ],
+    [
+        'Slabo27px_400Regular',
+    ],
+    [
+        'Oswald_200ExtraLight',
+        'Oswald_300Light',
+        'Oswald_400Regular',
+        'Oswald_500Medium',
+        'Oswald_600SemiBold',
+        'Oswald_700Bold',
+    ],
+    [
+        'SourceSansPro_200ExtraLight',
+        'SourceSansPro_200ExtraLight_Italic',
+        'SourceSansPro_300Light',
+        'SourceSansPro_300Light_Italic',
+        'SourceSansPro_400Regular',
+        'SourceSansPro_400Regular_Italic',
+        'SourceSansPro_600SemiBold',
+        'SourceSansPro_600SemiBold_Italic',
+        'SourceSansPro_700Bold',
+        'SourceSansPro_700Bold_Italic',
+        'SourceSansPro_900Black',
+        'SourceSansPro_900Black_Italic',
+    ],
     [
         'Montserrat_100Thin',
         'Montserrat_100Thin_Italic',
@@ -149,6 +203,55 @@ export default function App() {
     const [show, setShow] = useState(true);
     const [text, setText] = useState([]);
     const [font, setFont] = useState('');
+    let [loadedOpenSans, errorOpenSans] = OPENSANS.useFonts({
+        OpenSans_300Light: OPENSANS.OpenSans_300Light,
+        OpenSans_300Light_Italic: OPENSANS.OpenSans_300Light_Italic,
+        OpenSans_400Regular: OPENSANS.OpenSans_400Regular,
+        OpenSans_400Regular_Italic: OPENSANS.OpenSans_400Regular_Italic,
+        OpenSans_600SemiBold: OPENSANS.OpenSans_600SemiBold,
+        OpenSans_600SemiBold_Italic: OPENSANS.OpenSans_600SemiBold_Italic,
+        OpenSans_700Bold: OPENSANS.OpenSans_700Bold,
+        OpenSans_700Bold_Italic: OPENSANS.OpenSans_700Bold_Italic,
+        OpenSans_800ExtraBold: OPENSANS.OpenSans_800ExtraBold,
+        OpenSans_800ExtraBold_Italic: OPENSANS.OpenSans_800ExtraBold_Italic,
+    });
+    let [loadedLato, errorLato] = LATO.useFonts({
+        Lato_100Thin: LATO.Lato_100Thin,
+        Lato_100Thin_Italic: LATO.Lato_100Thin_Italic,
+        Lato_300Light: LATO.Lato_300Light,
+        Lato_300Light_Italic: LATO.Lato_300Light_Italic,
+        Lato_400Regular: LATO.Lato_400Regular,
+        Lato_400Regular_Italic: LATO.Lato_400Regular_Italic,
+        Lato_700Bold: LATO.Lato_700Bold,
+        Lato_700Bold_Italic: LATO.Lato_700Bold_Italic,
+        Lato_900Black: LATO.Lato_900Black,
+        Lato_900Black_Italic: LATO.Lato_900Black_Italic,
+    });
+    let [loadedSlabo27px, errorSlabo27px] = SLABO27PX.useFonts({
+        Slabo27px_400Regular: SLABO27PX.Slabo27px_400Regular 
+    });
+    let [loadedOswald, errorOswald] = OSWALD.useFonts({
+        Oswald_200ExtraLight: OSWALD.Oswald_200ExtraLight,
+        Oswald_300Light: OSWALD.Oswald_300Light,
+        Oswald_400Regular: OSWALD.Oswald_400Regular,
+        Oswald_500Medium: OSWALD.Oswald_500Medium,
+        Oswald_600SemiBold: OSWALD.Oswald_600SemiBold,
+        Oswald_700Bold: OSWALD.Oswald_700Bold,
+    });
+    let [loadedSourceSansPro, errorSourceSansPro] = SOURCESANSPRO.useFonts({
+        SourceSansPro_200ExtraLight: SOURCESANSPRO.SourceSansPro_200ExtraLight,
+        SourceSansPro_200ExtraLight_Italic: SOURCESANSPRO.SourceSansPro_200ExtraLight_Italic,
+        SourceSansPro_300Light: SOURCESANSPRO.SourceSansPro_300Light,
+        SourceSansPro_300Light_Italic: SOURCESANSPRO.SourceSansPro_300Light_Italic,
+        SourceSansPro_400Regular: SOURCESANSPRO.SourceSansPro_400Regular,
+        SourceSansPro_400Regular_Italic: SOURCESANSPRO.SourceSansPro_400Regular_Italic,
+        SourceSansPro_600SemiBold: SOURCESANSPRO.SourceSansPro_600SemiBold,
+        SourceSansPro_600SemiBold_Italic: SOURCESANSPRO.SourceSansPro_600SemiBold_Italic,
+        SourceSansPro_700Bold: SOURCESANSPRO.SourceSansPro_700Bold,
+        SourceSansPro_700Bold_Italic: SOURCESANSPRO.SourceSansPro_700Bold_Italic,
+        SourceSansPro_900Black: SOURCESANSPRO.SourceSansPro_900Black,
+        SourceSansPro_900Black_Italic: SOURCESANSPRO.SourceSansPro_900Black_Italic,
+    });
     let [loadedMontserrat, errorMontserrat] = MONTSERRAT.useFonts({
         Montserrat_100Thin: MONTSERRAT.Montserrat_100Thin,
         Montserrat_100Thin_Italic: MONTSERRAT.Montserrat_100Thin_Italic,
@@ -251,7 +354,7 @@ export default function App() {
                               contentContainerStyle={styles.contentContainer}>
                   <TouchableWithoutFeedback onPress={handleShowFont}>
                           <View style={{flex: 1}}>
-                              {show && loadedMontserrat && loadedRaleway && loadedPtsans && loadedInter && loadedRoboto && text.map((t,i) => <FontText key={`external-text-${i}`} t={t} i={i} />)}
+                              {show && loadedOpenSans && loadedLato && loadedSlabo27px && loadedOswald && loadedSourceSansPro && loadedMontserrat && loadedRaleway && loadedPtsans && loadedInter && loadedRoboto && text.map((t,i) => <FontText key={`external-text-${i}`} t={t} i={i} />)}
                               </View>
                   </TouchableWithoutFeedback>
                       </ScrollView>
