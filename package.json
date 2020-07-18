@@ -10,7 +10,10 @@
   "dependencies": {
     "@expo-google-fonts/inter": "^0.1.0",
     "@expo-google-fonts/lato": "^0.1.0",
+    "@expo-google-fonts/lora": "^0.1.0",
     "@expo-google-fonts/montserrat": "^0.1.0",
+    "@expo-google-fonts/noto-sans": "^0.1.0",
+    "@expo-google-fonts/nunito-sans": "^0.1.0",
     "@expo-google-fonts/open-sans": "^0.1.0",
     "@expo-google-fonts/oswald": "^0.1.0",
     "@expo-google-fonts/pt-sans": "^0.1.0",

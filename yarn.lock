@@ -951,10 +951,25 @@
   resolved "https://registry.yarnpkg.com/@expo-google-fonts/lato/-/lato-0.1.0.tgz#c0b62ebb883adf41f3e02bd76959914afc7d5d87"
   integrity sha512-+ooOTs9CPnAHvwe0HjtEHnBZ2MrxzBLqBuXsBIhne20BOuq251MRYzc+2R1cWi/mxyjX+S/buXAES8UvAoTGhw==
 
+"@expo-google-fonts/lora@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/lora/-/lora-0.1.0.tgz#f3af6597b3705a33c3e40e5ead0521bfb1415067"
+  integrity sha512-OrC0u57O9+61KOiS02jCeaGtp4JVnZnU07sppnDX4Lr3aW6fngdJyMbJ5Z8RwVm507BoTbbEWNoRHpx/6DGBLA==
+
 "@expo-google-fonts/montserrat@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@expo-google-fonts/montserrat/-/montserrat-0.1.0.tgz#745361cf6c7414749161930e94ccc962ed8ee7d3"
   integrity sha512-jSGVtgapN4Ahxf/p978TWIPV+Ax2cc60671BzkewLG/zGNIyRreE3eXsVJudotpRl2fRJQC5Q98DARfPh917Jg==
+
+"@expo-google-fonts/noto-sans@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/noto-sans/-/noto-sans-0.1.0.tgz#6cf6117ceb9170ce3bdc674820f165a6dca12e1d"
+  integrity sha512-Zx6XRp0gJiaqfI9PXUB7CQTxCC3udrTERyIVOxlyPGgjNnLRu+AljoiftTiMzJyT55rMSSsEBbmSE3UbKwfkUA==
+
+"@expo-google-fonts/nunito-sans@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/nunito-sans/-/nunito-sans-0.1.0.tgz#e7695d54f0400a93b0c54f69fd0f1be724735067"
+  integrity sha512-WF2s1vzgJJLZgcw3TFSZcJZ8CV4f/gXPRKnU39+4pp7fojwuMPIspMaAFO1we54K1slQJIkSyXipwNRtUSXxyg==
 
 "@expo-google-fonts/open-sans@^0.1.0":
   version "0.1.0"

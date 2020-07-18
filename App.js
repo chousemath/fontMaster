@@ -1,6 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState, useEffect} from 'react';
-import { StyleSheet, Animated, TouchableWithoutFeedback, ScrollView, SafeAreaView, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+    StyleSheet,
+    Animated,
+    TouchableWithoutFeedback,
+    ScrollView,
+    SafeAreaView,
+    Text,
+    View,
+} from 'react-native';
 import CardFlip from 'react-native-card-flip';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
@@ -15,6 +23,9 @@ import * as OSWALD from '@expo-google-fonts/oswald';
 import * as SLABO27PX from '@expo-google-fonts/slabo-27px';
 import * as LATO from '@expo-google-fonts/lato';
 import * as OPENSANS from '@expo-google-fonts/open-sans';
+import * as LORA from '@expo-google-fonts/lora';
+import * as NOTOSANS from '@expo-google-fonts/noto-sans';
+import * as NUNITOSANS from '@expo-google-fonts/nunito-sans';
 import {
     animate,
     animatedTiming,
@@ -23,6 +34,38 @@ import {
 
 let card;
 const fonts = [
+    [
+        'NunitoSans_200ExtraLight',
+        'NunitoSans_200ExtraLight_Italic',
+        'NunitoSans_300Light',
+        'NunitoSans_300Light_Italic',
+        'NunitoSans_400Regular',
+        'NunitoSans_400Regular_Italic',
+        'NunitoSans_600SemiBold',
+        'NunitoSans_600SemiBold_Italic',
+        'NunitoSans_700Bold',
+        'NunitoSans_700Bold_Italic',
+        'NunitoSans_800ExtraBold',
+        'NunitoSans_800ExtraBold_Italic',
+        'NunitoSans_900Black',
+        'NunitoSans_900Black_Italic',
+    ],
+    [
+        'NotoSans_400Regular',
+        'NotoSans_400Regular_Italic',
+        'NotoSans_700Bold',
+        'NotoSans_700Bold_Italic',
+    ],
+    [
+        'Lora_400Regular',
+        'Lora_500Medium',
+        'Lora_600SemiBold',
+        'Lora_700Bold',
+        'Lora_400Regular_Italic',
+        'Lora_500Medium_Italic',
+        'Lora_600SemiBold_Italic',
+        'Lora_700Bold_Italic',
+    ],
     [
         'OpenSans_300Light',
         'OpenSans_300Light_Italic',
@@ -47,9 +90,7 @@ const fonts = [
         'Lato_900Black',
         'Lato_900Black_Italic',
     ],
-    [
-        'Slabo27px_400Regular',
-    ],
+    ['Slabo27px_400Regular'],
     [
         'Oswald_200ExtraLight',
         'Oswald_300Light',
@@ -145,40 +186,40 @@ const fonts = [
     ],
 ];
 const quote = [
-    "I had always heard your entire life flashes in front of your eyes the second before you die.",
-    "First of all, that one second isn’t a second at all.",
-    "It stretches on forever, like an ocean of time.",
-    "For me, it was lying on my back at Boy Scout Camp, watching falling stars.",
-    "And yellow leaves from the maple trees that lined our street.",
-    "Or my grandmother’s hands, and the way her skin seemed like paper.",
-    "And the first time I saw my cousin Tony’s brand new Firebird.",
-    "And Janie, and Janie.",
-    "And Carolyn.",
-    "I guess I could be pretty pissed off about what happened to me, but it’s hard to stay mad when there’s so much beauty in the world.",
-    "Sometimes I feel like I’m seeing it all at once, and it’s too much.",
-    "My heart fills up like a balloon that’s about to burst.",
-    "And then I remember to relax, and stop trying to hold on to it, and then it flows through me like rain, and I can’t feel anything but gratitude for every single moment of my stupid little life.",
-    "You have no idea what I’m talking about, I’m sure.",
-    "But don’t worry.",
-    "You will someday.",
-    "I had always heard your entire life flashes in front of your eyes the second before you die.",
-    "First of all, that one second isn’t a second at all.",
-    "It stretches on forever, like an ocean of time.",
-    "For me, it was lying on my back at Boy Scout Camp, watching falling stars.",
-    "And yellow leaves from the maple trees that lined our street.",
-    "Or my grandmother’s hands, and the way her skin seemed like paper.",
-    "And the first time I saw my cousin Tony’s brand new Firebird.",
-    "And Janie, and Janie.",
-    "And Carolyn.",
-    "I guess I could be pretty pissed off about what happened to me, but it’s hard to stay mad when there’s so much beauty in the world.",
-    "Sometimes I feel like I’m seeing it all at once, and it’s too much.",
-    "My heart fills up like a balloon that’s about to burst.",
-    "And then I remember to relax, and stop trying to hold on to it, and then it flows through me like rain, and I can’t feel anything but gratitude for every single moment of my stupid little life.",
-    "You have no idea what I’m talking about, I’m sure.",
-    "But don’t worry.",
-    "You will someday.",
+    'I had always heard your entire life flashes in front of your eyes the second before you die.',
+    'First of all, that one second isn’t a second at all.',
+    'It stretches on forever, like an ocean of time.',
+    'For me, it was lying on my back at Boy Scout Camp, watching falling stars.',
+    'And yellow leaves from the maple trees that lined our street.',
+    'Or my grandmother’s hands, and the way her skin seemed like paper.',
+    'And the first time I saw my cousin Tony’s brand new Firebird.',
+    'And Janie, and Janie.',
+    'And Carolyn.',
+    'I guess I could be pretty pissed off about what happened to me, but it’s hard to stay mad when there’s so much beauty in the world.',
+    'Sometimes I feel like I’m seeing it all at once, and it’s too much.',
+    'My heart fills up like a balloon that’s about to burst.',
+    'And then I remember to relax, and stop trying to hold on to it, and then it flows through me like rain, and I can’t feel anything but gratitude for every single moment of my stupid little life.',
+    'You have no idea what I’m talking about, I’m sure.',
+    'But don’t worry.',
+    'You will someday.',
+    'I had always heard your entire life flashes in front of your eyes the second before you die.',
+    'First of all, that one second isn’t a second at all.',
+    'It stretches on forever, like an ocean of time.',
+    'For me, it was lying on my back at Boy Scout Camp, watching falling stars.',
+    'And yellow leaves from the maple trees that lined our street.',
+    'Or my grandmother’s hands, and the way her skin seemed like paper.',
+    'And the first time I saw my cousin Tony’s brand new Firebird.',
+    'And Janie, and Janie.',
+    'And Carolyn.',
+    'I guess I could be pretty pissed off about what happened to me, but it’s hard to stay mad when there’s so much beauty in the world.',
+    'Sometimes I feel like I’m seeing it all at once, and it’s too much.',
+    'My heart fills up like a balloon that’s about to burst.',
+    'And then I remember to relax, and stop trying to hold on to it, and then it flows through me like rain, and I can’t feel anything but gratitude for every single moment of my stupid little life.',
+    'You have no idea what I’m talking about, I’m sure.',
+    'But don’t worry.',
+    'You will someday.',
 ];
-function FontText({t, i}) { 
+function FontText({ t, i }) {
     const [opacity] = useState(new Animated.Value(0));
     useEffect(() => {
         setTimeout(() => {
@@ -197,13 +238,48 @@ function FontText({t, i}) {
                 fontSize: 24,
                 fontFamily: t.font,
             }}
-            key={`text-${i}`}>{t.text}</Animated.Text>
+            key={`text-${i}`}>
+            {t.text}
+        </Animated.Text>
     );
-};
+}
 export default function App() {
+    const [opacity] = useState(new Animated.Value(0));
     const [show, setShow] = useState(false);
     const [text, setText] = useState([]);
     const [font, setFont] = useState('');
+    let [loadedNunitoSans, errorNunitoSans] = NUNITOSANS.useFonts({
+        NunitoSans_200ExtraLight: NUNITOSANS.NunitoSans_200ExtraLight,
+        NunitoSans_200ExtraLight_Italic: NUNITOSANS.NunitoSans_200ExtraLight_Italic,
+        NunitoSans_300Light: NUNITOSANS.NunitoSans_300Light,
+        NunitoSans_300Light_Italic: NUNITOSANS.NunitoSans_300Light_Italic,
+        NunitoSans_400Regular: NUNITOSANS.NunitoSans_400Regular,
+        NunitoSans_400Regular_Italic: NUNITOSANS.NunitoSans_400Regular_Italic,
+        NunitoSans_600SemiBold: NUNITOSANS.NunitoSans_600SemiBold,
+        NunitoSans_600SemiBold_Italic: NUNITOSANS.NunitoSans_600SemiBold_Italic,
+        NunitoSans_700Bold: NUNITOSANS.NunitoSans_700Bold,
+        NunitoSans_700Bold_Italic: NUNITOSANS.NunitoSans_700Bold_Italic,
+        NunitoSans_800ExtraBold: NUNITOSANS.NunitoSans_800ExtraBold,
+        NunitoSans_800ExtraBold_Italic: NUNITOSANS.NunitoSans_800ExtraBold_Italic,
+        NunitoSans_900Black: NUNITOSANS.NunitoSans_900Black,
+        NunitoSans_900Black_Italic: NUNITOSANS.NunitoSans_900Black_Italic,
+    });
+    let [loadedNotoSans, errorNotoSans] = NOTOSANS.useFonts({
+        NotoSans_400Regular: NOTOSANS.NotoSans_400Regular,
+        NotoSans_400Regular_Italic: NOTOSANS.NotoSans_400Regular_Italic,
+        NotoSans_700Bold: NOTOSANS.NotoSans_700Bold,
+        NotoSans_700Bold_Italic: NOTOSANS.NotoSans_700Bold_Italic,
+    });
+    let [loadedLora, errorLora] = LORA.useFonts({
+        Lora_400Regular: LORA.Lora_400Regular,
+        Lora_500Medium: LORA.Lora_500Medium,
+        Lora_600SemiBold: LORA.Lora_600SemiBold,
+        Lora_700Bold: LORA.Lora_700Bold,
+        Lora_400Regular_Italic: LORA.Lora_400Regular_Italic,
+        Lora_500Medium_Italic: LORA.Lora_500Medium_Italic,
+        Lora_600SemiBold_Italic: LORA.Lora_600SemiBold_Italic,
+        Lora_700Bold_Italic: LORA.Lora_700Bold_Italic,
+    });
     let [loadedOpenSans, errorOpenSans] = OPENSANS.useFonts({
         OpenSans_300Light: OPENSANS.OpenSans_300Light,
         OpenSans_300Light_Italic: OPENSANS.OpenSans_300Light_Italic,
@@ -229,7 +305,7 @@ export default function App() {
         Lato_900Black_Italic: LATO.Lato_900Black_Italic,
     });
     let [loadedSlabo27px, errorSlabo27px] = SLABO27PX.useFonts({
-        Slabo27px_400Regular: SLABO27PX.Slabo27px_400Regular 
+        Slabo27px_400Regular: SLABO27PX.Slabo27px_400Regular,
     });
     let [loadedOswald, errorOswald] = OSWALD.useFonts({
         Oswald_200ExtraLight: OSWALD.Oswald_200ExtraLight,
@@ -241,23 +317,30 @@ export default function App() {
     });
     let [loadedSourceSansPro, errorSourceSansPro] = SOURCESANSPRO.useFonts({
         SourceSansPro_200ExtraLight: SOURCESANSPRO.SourceSansPro_200ExtraLight,
-        SourceSansPro_200ExtraLight_Italic: SOURCESANSPRO.SourceSansPro_200ExtraLight_Italic,
+        SourceSansPro_200ExtraLight_Italic:
+            SOURCESANSPRO.SourceSansPro_200ExtraLight_Italic,
         SourceSansPro_300Light: SOURCESANSPRO.SourceSansPro_300Light,
-        SourceSansPro_300Light_Italic: SOURCESANSPRO.SourceSansPro_300Light_Italic,
+        SourceSansPro_300Light_Italic:
+            SOURCESANSPRO.SourceSansPro_300Light_Italic,
         SourceSansPro_400Regular: SOURCESANSPRO.SourceSansPro_400Regular,
-        SourceSansPro_400Regular_Italic: SOURCESANSPRO.SourceSansPro_400Regular_Italic,
+        SourceSansPro_400Regular_Italic:
+            SOURCESANSPRO.SourceSansPro_400Regular_Italic,
         SourceSansPro_600SemiBold: SOURCESANSPRO.SourceSansPro_600SemiBold,
-        SourceSansPro_600SemiBold_Italic: SOURCESANSPRO.SourceSansPro_600SemiBold_Italic,
+        SourceSansPro_600SemiBold_Italic:
+            SOURCESANSPRO.SourceSansPro_600SemiBold_Italic,
         SourceSansPro_700Bold: SOURCESANSPRO.SourceSansPro_700Bold,
-        SourceSansPro_700Bold_Italic: SOURCESANSPRO.SourceSansPro_700Bold_Italic,
+        SourceSansPro_700Bold_Italic:
+            SOURCESANSPRO.SourceSansPro_700Bold_Italic,
         SourceSansPro_900Black: SOURCESANSPRO.SourceSansPro_900Black,
-        SourceSansPro_900Black_Italic: SOURCESANSPRO.SourceSansPro_900Black_Italic,
+        SourceSansPro_900Black_Italic:
+            SOURCESANSPRO.SourceSansPro_900Black_Italic,
     });
     let [loadedMontserrat, errorMontserrat] = MONTSERRAT.useFonts({
         Montserrat_100Thin: MONTSERRAT.Montserrat_100Thin,
         Montserrat_100Thin_Italic: MONTSERRAT.Montserrat_100Thin_Italic,
         Montserrat_200ExtraLight: MONTSERRAT.Montserrat_200ExtraLight,
-        Montserrat_200ExtraLight_Italic: MONTSERRAT.Montserrat_200ExtraLight_Italic,
+        Montserrat_200ExtraLight_Italic:
+            MONTSERRAT.Montserrat_200ExtraLight_Italic,
         Montserrat_300Light: MONTSERRAT.Montserrat_300Light,
         Montserrat_300Light_Italic: MONTSERRAT.Montserrat_300Light_Italic,
         Montserrat_400Regular: MONTSERRAT.Montserrat_400Regular,
@@ -269,7 +352,8 @@ export default function App() {
         Montserrat_700Bold: MONTSERRAT.Montserrat_700Bold,
         Montserrat_700Bold_Italic: MONTSERRAT.Montserrat_700Bold_Italic,
         Montserrat_800ExtraBold: MONTSERRAT.Montserrat_800ExtraBold,
-        Montserrat_800ExtraBold_Italic: MONTSERRAT.Montserrat_800ExtraBold_Italic,
+        Montserrat_800ExtraBold_Italic:
+            MONTSERRAT.Montserrat_800ExtraBold_Italic,
         Montserrat_900Black: MONTSERRAT.Montserrat_900Black,
         Montserrat_900Black_Italic: MONTSERRAT.Montserrat_900Black_Italic,
     });
@@ -327,74 +411,139 @@ export default function App() {
     const resetList = () => {
         const _text = [];
         const _font = fonts[Math.floor(Math.random() * fonts.length)];
-        let _quote = _.shuffle(quote);
-        for (let i = 0; i < _font.length; i++) _text.push({text: _quote[i], font: _font[i], timeout: 100 * i});
-        _quote = _.shuffle(quote);
-        for (let i = _font.length; i < 40; i++) _text.push({text: _quote[Math.floor(Math.random() * _quote.length)], font: _font[i], timeout: 100 * i});
-        setText(_text);
+
+        const fontCount = _font.length;
+        const quoteCount = quote.length;
+        let count = 0;
+        let fonti = 0;
+        let quotei = 0;
+        while (count < 50) {
+            if (fonti === fontCount) fonti = 0;
+            if (quotei === quoteCount) quotei = 0;
+            _text.push({
+                text: quote[quotei],
+                font: _font[fonti],
+                timeout: 100 * count,
+            });
+            count++;
+            fonti++;
+            quotei++;
+        }
+
+        setText(_.shuffle(_text));
         setFont(_font[0]);
     };
 
     let start = 0;
     useEffect(() => {
-        start = (new Date()).valueOf();
+        start = new Date().valueOf();
         SplashScreen.preventAutoHideAsync();
         resetList();
     }, []);
 
     const handleShowFont = () => {
         card.flip();
-        setTimeout(() => setShow(false), 300);
+        setTimeout(() => {
+            setShow(false);
+            animateNative(opacity, 300, 1);
+        }, 300);
     };
     const handleShowList = () => {
+        animateNative(opacity, 200, 0);
         setTimeout(() => resetList(), 200);
         setTimeout(() => setShow(true), 300);
         card.flip();
     };
     useEffect(() => {
-        if (loadedOpenSans && loadedLato && loadedSlabo27px && loadedOswald && loadedSourceSansPro && loadedMontserrat && loadedRaleway && loadedPtsans && loadedInter && loadedRoboto) {
-            const now = (new Date()).valueOf();
+        if (
+            loadedNunitoSans &&
+            loadedNotoSans &&
+            loadedLora &&
+            loadedOpenSans &&
+            loadedLato &&
+            loadedSlabo27px &&
+            loadedOswald &&
+            loadedSourceSansPro &&
+            loadedMontserrat &&
+            loadedRaleway &&
+            loadedPtsans &&
+            loadedInter &&
+            loadedRoboto
+        ) {
+            const now = new Date().valueOf();
             let diff = now - start;
-            diff = diff > 1000 ? 0 : Math.max(diff, (start + 1000) - now);
+            diff = diff > 1000 ? 0 : Math.max(diff, start + 1000 - now);
             setTimeout(() => {
                 SplashScreen.hideAsync();
                 setTimeout(() => setShow(true), 150);
             }, diff);
         }
-    }, [loadedOpenSans , loadedLato , loadedSlabo27px , loadedOswald , loadedSourceSansPro , loadedMontserrat , loadedRaleway , loadedPtsans , loadedInter , loadedRoboto , ]);
-  return (
-      <View style={{flex: 1}}>
-          <SafeAreaView style={styles.container}>
-              <CardFlip style={styles.cardContainer} ref={ref => card = ref} >
-                      <ScrollView
-                              showsVerticalScrollIndicator={false}
-                              contentContainerStyle={styles.contentContainer}>
-                  <TouchableWithoutFeedback onPress={handleShowFont}>
-                          <View style={{flex: 1}}>
-                              {show && text.map((t,i) => <FontText key={`external-text-${i}`} t={t} i={i} />)}
-                              </View>
-                  </TouchableWithoutFeedback>
-                      </ScrollView>
-                  <TouchableWithoutFeedback onPress={handleShowList}>
-                      <View style={{flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', fontFamily: font,}}>
-                          <Text style={{fontSize: 32,}}>{font.split('_')[0]}</Text>
-                          </View>
-                  </TouchableWithoutFeedback>
-              </CardFlip>
-              <StatusBar style="auto" />
-      </SafeAreaView>
-      </View>
-  );
+    }, [
+        loadedNunitoSans,
+        loadedNotoSans,
+        loadedLora,
+        loadedOpenSans,
+        loadedLato,
+        loadedSlabo27px,
+        loadedOswald,
+        loadedSourceSansPro,
+        loadedMontserrat,
+        loadedRaleway,
+        loadedPtsans,
+        loadedInter,
+        loadedRoboto,
+    ]);
+    return (
+        <View style={{ flex: 1 }}>
+            <SafeAreaView style={styles.container}>
+                <CardFlip
+                    style={styles.cardContainer}
+                    ref={(ref) => (card = ref)}>
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        contentContainerStyle={styles.contentContainer}>
+                        <TouchableWithoutFeedback onPress={handleShowFont}>
+                            <View style={{ flex: 1 }}>
+                                {show &&
+                                    text.map((t, i) => (
+                                        <FontText
+                                            key={`external-text-${i}`}
+                                            t={t}
+                                            i={i}
+                                        />
+                                    ))}
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </ScrollView>
+                    <TouchableWithoutFeedback onPress={handleShowList}>
+                        <View
+                            style={{
+                                flex: 1,
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                fontFamily: font,
+                            }}>
+                            <Animated.Text style={{ opacity, fontSize: 32 }}>
+                                {font.split('_')[0]}
+                            </Animated.Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                </CardFlip>
+                <StatusBar style='auto' />
+            </SafeAreaView>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
     cardContainer: {
         flex: 1,
     },
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-      paddingLeft: 32,
-  },
-    contentContainer: {paddingHorizontal: 32},
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        paddingLeft: 32,
+    },
+    contentContainer: { paddingHorizontal: 32 },
 });
