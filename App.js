@@ -251,7 +251,8 @@ export default function App() {
     const [font, setFont] = useState('');
     let [loadedNunitoSans, errorNunitoSans] = NUNITOSANS.useFonts({
         NunitoSans_200ExtraLight: NUNITOSANS.NunitoSans_200ExtraLight,
-        NunitoSans_200ExtraLight_Italic: NUNITOSANS.NunitoSans_200ExtraLight_Italic,
+        NunitoSans_200ExtraLight_Italic:
+            NUNITOSANS.NunitoSans_200ExtraLight_Italic,
         NunitoSans_300Light: NUNITOSANS.NunitoSans_300Light,
         NunitoSans_300Light_Italic: NUNITOSANS.NunitoSans_300Light_Italic,
         NunitoSans_400Regular: NUNITOSANS.NunitoSans_400Regular,
@@ -261,7 +262,8 @@ export default function App() {
         NunitoSans_700Bold: NUNITOSANS.NunitoSans_700Bold,
         NunitoSans_700Bold_Italic: NUNITOSANS.NunitoSans_700Bold_Italic,
         NunitoSans_800ExtraBold: NUNITOSANS.NunitoSans_800ExtraBold,
-        NunitoSans_800ExtraBold_Italic: NUNITOSANS.NunitoSans_800ExtraBold_Italic,
+        NunitoSans_800ExtraBold_Italic:
+            NUNITOSANS.NunitoSans_800ExtraBold_Italic,
         NunitoSans_900Black: NUNITOSANS.NunitoSans_900Black,
         NunitoSans_900Black_Italic: NUNITOSANS.NunitoSans_900Black_Italic,
     });
@@ -412,7 +414,7 @@ export default function App() {
     const resetList = () => {
         const _text = [];
 
-        let ff = fonts.filter(f => !usedFonts.current.includes(f[0]));
+        let ff = fonts.filter((f) => !usedFonts.current.includes(f[0]));
         if (ff.length === 0) {
             usedFonts.current = [];
             ff = _.cloneDeep(fonts);
