@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useRef, useState, useEffect } from 'react';
 import {
+    Dimensions,
     StyleSheet,
     Animated,
     TouchableWithoutFeedback,
@@ -9,6 +10,8 @@ import {
     Text,
     View,
 } from 'react-native';
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 import CardFlip from 'react-native-card-flip';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
@@ -245,6 +248,21 @@ function FontText({ t, i }) {
 }
 export default function App() {
     const usedFonts = useRef([]);
+    const [animatedValue] = useState(new Animated.Value(0));
+    const flipValue = useRef(0);
+    animatedValue.addListener(({ value }) => {
+        flipValue.current = value;
+    });
+    const frontInterpolate = animatedValue.interpolate({
+        inputRange: [0, 180],
+        outputRange: ['0deg', '180deg'],
+    });
+    const backInterpolate = animatedValue.interpolate({
+        inputRange: [0, 180],
+        outputRange: ['180deg', '360deg'],
+    });
+    const frontAnimatedStyle = { transform: [{ rotateY: frontInterpolate }] };
+    const backAnimatedStyle = { transform: [{ rotateY: backInterpolate }] };
     const [opacity] = useState(new Animated.Value(0));
     const [show, setShow] = useState(false);
     const [text, setText] = useState([]);
@@ -453,8 +471,24 @@ export default function App() {
         resetList();
     }, []);
 
+    const cardFlip = () => {
+        if (flipValue.current >= 90) {
+            Animated.spring(animatedValue, {
+                toValue: 0,
+                friction: 8,
+                tension: 10,
+            }).start();
+        } else {
+            Animated.spring(animatedValue, {
+                toValue: 180,
+                friction: 8,
+                tension: 10,
+            }).start();
+        }
+    };
     const handleShowFont = () => {
-        card.flip();
+        alert('hello');
+        cardFlip();
         setTimeout(() => {
             setShow(false);
             animateNative(opacity, 300, 1);
@@ -464,7 +498,7 @@ export default function App() {
         animateNative(opacity, 200, 0);
         setTimeout(() => resetList(), 200);
         setTimeout(() => setShow(true), 300);
-        card.flip();
+        cardFlip();
     };
     useEffect(() => {
         if (
@@ -507,43 +541,44 @@ export default function App() {
     ]);
     return (
         <View style={{ flex: 1 }}>
-            <SafeAreaView style={styles.container}>
-                <CardFlip
-                    style={styles.cardContainer}
-                    ref={(ref) => (card = ref)}>
+            <TouchableWithoutFeedback onPress={handleShowFont}>
+                <Animated.View style={[frontAnimatedStyle, styles.flipCard]}>
                     <ScrollView
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={styles.contentContainer}>
-                        <TouchableWithoutFeedback onPress={handleShowFont}>
-                            <View style={{ flex: 1 }}>
-                                {show &&
-                                    text.map((t, i) => (
-                                        <FontText
-                                            key={`external-text-${i}`}
-                                            t={t}
-                                            i={i}
-                                        />
-                                    ))}
-                            </View>
-                        </TouchableWithoutFeedback>
+                        {show &&
+                            text.map((t, i) => (
+                                <FontText
+                                    key={`external-text-${i}`}
+                                    t={t}
+                                    i={i}
+                                />
+                            ))}
                     </ScrollView>
-                    <TouchableWithoutFeedback onPress={handleShowList}>
-                        <View
-                            style={{
-                                flex: 1,
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                fontFamily: font,
-                            }}>
-                            <Animated.Text style={{ opacity, fontSize: 32 }}>
-                                {font.split('_')[0]}
-                            </Animated.Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                </CardFlip>
-                <StatusBar style='auto' />
-            </SafeAreaView>
+                </Animated.View>
+            </TouchableWithoutFeedback>
+            <Animated.View
+                style={[
+                    backAnimatedStyle,
+                    styles.flipCard,
+                    styles.flipCardBack,
+                ]}>
+                <TouchableWithoutFeedback onPress={handleShowList}>
+                    <View
+                        style={{
+                            flex: 1,
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            fontFamily: font,
+                        }}>
+                        <Text style={{ fontSize: 32 }}>
+                            {font.split('_')[0]}
+                        </Text>
+                    </View>
+                </TouchableWithoutFeedback>
+            </Animated.View>
+            <StatusBar style='auto' />
         </View>
     );
 }
@@ -556,6 +591,19 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         paddingLeft: 32,
+    },
+    flipCard: {
+        width: windowWidth,
+        height: windowHeight,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backfaceVisibility: 'hidden',
+    },
+    flipCardBack: {
+        backgroundColor: 'red',
+        position: 'absolute',
+        top: 0,
     },
     contentContainer: { paddingHorizontal: 32 },
 });
