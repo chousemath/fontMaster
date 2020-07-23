@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
     StyleSheet,
     Animated,
@@ -244,6 +244,7 @@ function FontText({ t, i }) {
     );
 }
 export default function App() {
+    const usedFonts = useRef([]);
     const [opacity] = useState(new Animated.Value(0));
     const [show, setShow] = useState(false);
     const [text, setText] = useState([]);
@@ -410,7 +411,15 @@ export default function App() {
     });
     const resetList = () => {
         const _text = [];
-        const _font = fonts[Math.floor(Math.random() * fonts.length)];
+
+        let ff = fonts.filter(f => !usedFonts.current.includes(f[0]));
+        if (ff.length === 0) {
+            usedFonts.current = [];
+            ff = _.cloneDeep(fonts);
+        }
+
+        const idx = Math.floor(Math.random() * ff.length);
+        const _font = ff[idx];
 
         const fontCount = _font.length;
         const quoteCount = quote.length;
@@ -432,6 +441,7 @@ export default function App() {
 
         setText(_.shuffle(_text));
         setFont(_font[0]);
+        usedFonts.current.push(_font[0]);
     };
 
     let start = 0;
